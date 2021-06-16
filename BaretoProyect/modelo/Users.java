@@ -10,21 +10,21 @@ import beans.User;
 public class Users {
 
 	public ArrayList<User> getAllUsers() {
-		ResultSet resultados = Conexion.EjecutarSentencia("SELECT * FROM user");
+		ResultSet resultados = Conexion.EjecutarSentencia("SELECT * FROM usuarios WHERE nombre");
 		ArrayList<User> user = new controlador.Helper().setUserArrayList(resultados);
 		return user;
 	}
 
 	public User getUserByNameAndPass(String usuario, String pass) {
 		ResultSet userBD = Conexion
-				.EjecutarSentencia("SELECT * FROM user WHERE user='" + usuario + "' AND PASS ='" + pass +"'");
+				.EjecutarSentencia("SELECT * FROM usuarios WHERE nombre='" + usuario + "' AND password ='" + pass +"'");
 		User user = new controlador.Helper().setUserObject(userBD);
 		return user;
 	}
 
 	public boolean checkUserAndPass(String nombre, String password) {
 		ResultSet usuarioBD = Conexion
-				.EjecutarSentencia("SELECT * FROM user WHERE user ='" + nombre + "' AND PASS='" + password + "'");
+				.EjecutarSentencia("SELECT * FROM usuarios WHERE nombre ='" + nombre + "' AND password='" + password + "'");
 
 		try {
 			return usuarioBD.next();
@@ -34,16 +34,16 @@ public class Users {
 	}
 
 	public void insertUser(String nombre, String password) {
-		Conexion.EjecutarUpdate("INSERT INTO user (id ,user, PASS) VALUES (' 1," + nombre + "', '" + password + "');");
+		Conexion.EjecutarUpdate("INSERT INTO usuarios (nombre, password) VALUES (' " + nombre + "', '" + password + "');");
 	}
 
 	// Metodo para implementar una vez iniciado sesion (con un boton ej)
 	public void updateUser(String nombre, String password) {
-		Conexion.EjecutarUpdate("UPDATE user SET PASS='" + password + "' WHERE user='" + nombre + "';");
+		Conexion.EjecutarUpdate("UPDATE usuarios SET password='" + password + "' WHERE nombre='" + nombre + "';");
 	}
 
 	public void deleteUser(String nombre, String password) {
-		Conexion.EjecutarUpdate("DELETE FROM user WHERE user = '" + nombre + "' AND pass = '" + password + "';");
+		Conexion.EjecutarUpdate("DELETE FROM usuario WHERE nombre = '" + nombre + "' AND password = '" + password + "';");
 	}
 
 }
